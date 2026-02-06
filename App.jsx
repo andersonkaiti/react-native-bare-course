@@ -1,11 +1,9 @@
 import { Text, View } from 'react-native'
 
-// A base de qualquer interface são blocos e textos. No entanto, ao contrário
-// da web, no React Native não temos tags semânticas como <header>, <footer>,
-// <nav>, etc., mas sim apenas <View> e <Text>.
-
-// Strings de texto devem ser escritas dentro de componentes <Text>.
-// Dentro de textos é possível adicionar outros textos.
+// Os textos no React Native, por padrão, não são selecionáveis.
+// Para torná-los selecionáveis, usamos a propriedade 'selectable'.
+// A propriedade 'selectionColor' define a cor da seleção e é exclusiva para
+// Android.
 
 export function App() {
   return (
@@ -15,9 +13,10 @@ export function App() {
           marginTop: 38,
           fontSize: 32,
         }}
+        selectable // Selecionável
+        selectionColor="rgba(255, 0, 0, 0.5)" // * Android only
       >
         Hello, JStack!
-        <Text style={{ marginLeft: 10, fontWeight: 'bold' }}>How are you?</Text>
       </Text>
     </View>
   )

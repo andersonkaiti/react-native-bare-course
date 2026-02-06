@@ -1,9 +1,11 @@
 import { Text, View } from 'react-native'
 
-// Os textos no React Native, por padrão, não são selecionáveis.
-// Para torná-los selecionáveis, usamos a propriedade 'selectable'.
-// A propriedade 'selectionColor' define a cor da seleção e é exclusiva para
-// Android.
+// O texto sempre ocupa toda a largura disponível do container pai, a não ser
+// que a largura dele seja definida.
+
+// numberOfLines define quantas linhas o texto pode ocupar e, caso o selectable
+// seja true, isso acaba criando um scroll dependendo do numberOfLines.
+// ellipsizeMode define onde o texto deve ser cortado.
 
 export function App() {
   return (
@@ -13,10 +15,15 @@ export function App() {
           marginTop: 38,
           fontSize: 32,
         }}
-        selectable // Selecionável
-        selectionColor="rgba(255, 0, 0, 0.5)" // * Android only
+        selectable
+        selectionColor="rgba(255, 0, 0, 0.5)"
+        numberOfLines={1}
+        ellipsizeMode="tail"
       >
-        Hello, JStack!
+        Hello, JStack! Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+        Quos sequi, distinctio deserunt numquam iure dolores aliquam possimus
+        provident quia nulla alias vitae minima enim hic. Dolorum ratione at
+        amet odio.
       </Text>
     </View>
   )

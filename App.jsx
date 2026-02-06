@@ -1,11 +1,11 @@
 import { Text, View } from 'react-native'
 
-// O texto sempre ocupa toda a largura disponível do container pai, a não ser
-// que a largura dele seja definida.
+// O allowFontScaling permite que o texto seja redimensionado de acordo com as
+// configurações de acessibilidade do sistema. Se for false, o texto não será
+// redimensionado.
 
-// numberOfLines define quantas linhas o texto pode ocupar e, caso o selectable
-// seja true, isso acaba criando um scroll dependendo do numberOfLines.
-// ellipsizeMode define onde o texto deve ser cortado.
+// maxFontSizeMultiplier define o multiplicador máximo de fonte.
+// Se for 1.5, o texto será redimensionado em até 1.5 vezes o tamanho original.
 
 export function App() {
   return (
@@ -19,6 +19,8 @@ export function App() {
         selectionColor="rgba(255, 0, 0, 0.5)"
         numberOfLines={1}
         ellipsizeMode="tail"
+        allowFontScaling={true}
+        maxFontSizeMultiplier={1.5}
       >
         Hello, JStack! Lorem ipsum dolor sit, amet consectetur adipisicing elit.
         Quos sequi, distinctio deserunt numquam iure dolores aliquam possimus

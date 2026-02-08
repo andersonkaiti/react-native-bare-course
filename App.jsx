@@ -1,32 +1,39 @@
 import { ScrollView, Text } from 'react-native'
 
-// O comportamento da scrollbar é aparecer durante o scroll horizontal ou
-// vertical e desaparecer quando o usuário parar de interagir.
+// Todas as interações do usuário com o app acontecem no lado nativo e, para
+// identificar algum evento, é necessário passar props para o JavaScript
+// conversar com a parte nativa (event listeners).
 
-// Para que a scrollbar permaneça visível o tempo todo, a ScrollView
-// aceita a prop persistentScrollbar. * Android only
+// O scrollEventThrottle (* iOS only) é um valor em ms que define a taxa de
+// atualização do evento de scroll. Um valor menor resulta em mais atualizações
+// e, consequentemente, mais problemas de performance.
 
-// Para que a scrollbar tenha um estilo diferente, a ScrollView
-// aceita a prop indicatorStyle. * iOS only
+// onScroll é um evento que é chamado toda vez que o usuário rola a tela. Ele
+// recebe um objeto event que contém informações sobre o evento de scroll.
+// event.nativeEvent.contentOffset é um objeto que contém as coordenadas do
+// scroll. Como o iOS tem o efeito do bounce, o valor pode ser negativo.
 
-// Para que a scrollbar não apareça, a ScrollView aceita a prop
-// showsVerticalScrollIndicator para o scroll vertical e
-// showsHorizontalScrollIndicator para o scroll horizontal. Alguns aplicativos,
-// como o Instagram, quando tem um scroll na horizontal, não mostram a
-// scrollbar, mas sim um elemento cortado para indicar que existe mais
-// conteúdo.
+// onScrollBeginDrag é um evento que é chamado quando o usuário começa a rolar
+// a tela e o onScrollEndDrag é um evento que é chamado quando o usuário
+// termina de rolar a tela.
+
+// onScrollToTop (* iOS only) é um evento que é chamado quando o usuário rola a
+// tela para o topo.
 
 export function App() {
   return (
     <ScrollView
-      persistentScrollbar // * Android only
-      indicatorStyle="white" // * iOS only
-      showsVerticalScrollIndicator={false} // Anula as outras configurações da scrollbar
+      showsVerticalScrollIndicator={false}
+      // scrollEventThrottle={16} // * iOS only
+      // onScroll={(event) => console.log(event.nativeEvent.contentOffset.y)}
+      // onScrollBeginDrag={() => console.log('beginDrag')}
+      // onScrollEndDrag={() => console.log('endDrag')}
+      onScrollToTop={() => console.log('scrollTop')} // * iOS only
     >
       <ScrollView
         horizontal
-        persistentScrollbar
         showsHorizontalScrollIndicator={false}
+        // onScroll={(event) => console.log(event.nativeEvent.contentOffset.x)}
       >
         <Text style={{ marginTop: 38, fontSize: 32 }}>
           Início! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quos

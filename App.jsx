@@ -1,32 +1,37 @@
-import { Text, View } from 'react-native'
+import { ScrollView, Text } from 'react-native'
 
-// O allowFontScaling permite que o texto seja redimensionado de acordo com as
-// configurações de acessibilidade do sistema. Se for false, o texto não será
-// redimensionado.
+// Apesar de apenas existir o componente View para criar containers, existem
+// outros componentes que permitem trazer mais funcionalidades/comportamentos
+// adicionais para a View.
 
-// maxFontSizeMultiplier define o multiplicador máximo de fonte.
-// Se for 1.5, o texto será redimensionado em até 1.5 vezes o tamanho original.
+// Por padrão, o ScrollView cria um scroll na vertical e não é inteligente
+// em saber qual é a direção do scroll. É necessário definir a direção a partir
+// da prop horizontal.
 
 export function App() {
   return (
-    <View>
-      <Text
-        style={{
-          marginTop: 38,
-          fontSize: 32,
-        }}
-        selectable
-        selectionColor="rgba(255, 0, 0, 0.5)"
-        numberOfLines={1}
-        ellipsizeMode="tail"
-        allowFontScaling={true}
-        maxFontSizeMultiplier={1.5}
-      >
-        Hello, JStack! Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-        Quos sequi, distinctio deserunt numquam iure dolores aliquam possimus
+    <ScrollView>
+      <Text style={{ marginTop: 38, fontSize: 32 }}>
+        Início! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quos
+        sequi, distinctio deserunt numquam iure dolores aliquam possimus
         provident quia nulla alias vitae minima enim hic. Dolorum ratione at
-        amet odio.
+        amet odio. Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum
+        dolor sit amet consectetur, adipisicing elit. Repellendus quis deleniti
+        placeat impedit vero alias doloremque, quas, fuga dignissimos vel
+        obcaecati nostrum, rerum quam non? Nisi illum consequatur perspiciatis
+        ea. Fim!
       </Text>
-    </View>
+
+      <ScrollView horizontal>
+        <Text style={{ marginTop: 38, fontSize: 32 }}>
+          Início! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quos
+          sequi, distinctio deserunt numquam iure dolores aliquam possimus
+          provident quia nulla alias vitae minima enim hic. Dolorum ratione at
+          amet odio. Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+          Fim!
+        </Text>
+      </ScrollView>
+    </ScrollView>
   )
 }

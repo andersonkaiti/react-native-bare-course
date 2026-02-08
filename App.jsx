@@ -1,59 +1,47 @@
-import { ScrollView, Text } from 'react-native'
+import { Platform, ScrollView, Text } from 'react-native'
 
-// Todas as interações do usuário com o app acontecem no lado nativo e, para
-// identificar algum evento, é necessário passar props para o JavaScript
-// conversar com a parte nativa (event listeners).
+// O React Native contém a Platform API, que fornece informações sobre a
+// plataforma em que o app está sendo executado. Ela é útil para
+// personalizar o comportamento do app de acordo com a plataforma e a versão,
+// caso haja alguma incompatibilidade, e personalizar um fallback.
 
-// O scrollEventThrottle (* iOS only) é um valor em ms que define a taxa de
-// atualização do evento de scroll. Um valor menor resulta em mais atualizações
-// e, consequentemente, mais problemas de performance.
+// No Platform.select({}), ele retorna o valor da plataforma que está sendo
+// executada. Caso não encontre, ele retorna o valor native e, se não houver
+// valor native, ele retorna o valor default.
 
-// onScroll é um evento que é chamado toda vez que o usuário rola a tela. Ele
-// recebe um objeto event que contém informações sobre o evento de scroll.
-// event.nativeEvent.contentOffset é um objeto que contém as coordenadas do
-// scroll. Como o iOS tem o efeito do bounce, o valor pode ser negativo.
+// Dessa forma, caso, por exemplo, a prototipação da UI do android que seja
+// diferente da UI do iOS, podemos usar Platform.select({}) para personalizar
+// a UI de acordo com a plataforma.
 
-// onScrollBeginDrag é um evento que é chamado quando o usuário começa a rolar
-// a tela e o onScrollEndDrag é um evento que é chamado quando o usuário
-// termina de rolar a tela.
+// console.log({
+//   OS: Platform.OS,
+//   Version: Platform.Version,
+// })
 
-// onScrollToTop (* iOS only) é um evento que é chamado quando o usuário rola a
-// tela para o topo.
+// const isAndroid = Platform.OS === 'android'
 
 export function App() {
-  return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      // scrollEventThrottle={16} // * iOS only
-      // onScroll={(event) => console.log(event.nativeEvent.contentOffset.y)}
-      // onScrollBeginDrag={() => console.log('beginDrag')}
-      // onScrollEndDrag={() => console.log('endDrag')}
-      onScrollToTop={() => console.log('scrollTop')} // * iOS only
-    >
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        // onScroll={(event) => console.log(event.nativeEvent.contentOffset.x)}
-      >
-        <Text style={{ marginTop: 38, fontSize: 32 }}>
-          Início! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quos
-          sequi, distinctio deserunt numquam iure dolores aliquam possimus
-          provident quia nulla alias vitae minima enim hic. Dolorum ratione at
-          amet odio. Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-          Fim!
-        </Text>
-      </ScrollView>
+  // if (isAndroid) {
+  //   return (
+  //     <ScrollView>
+  //       <Text style={{ marginTop: 58, fontSize: 32 }}>Hello, Android!</Text>
+  //     </ScrollView>
+  //   )
+  // }
 
-      <Text style={{ marginTop: 38, fontSize: 32 }}>
-        Início! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quos
-        sequi, distinctio deserunt numquam iure dolores aliquam possimus
-        provident quia nulla alias vitae minima enim hic. Dolorum ratione at
-        amet odio. Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum
-        dolor sit amet consectetur, adipisicing elit. Repellendus quis deleniti
-        placeat impedit vero alias doloremque, quas, fuga dignissimos vel
-        obcaecati nostrum, rerum quam non? Nisi illum consequatur perspiciatis
-        ea. Fim!
+  return (
+    <ScrollView>
+      <Text style={{ marginTop: 58, fontSize: 32 }}>
+        {Platform.select({
+          android: (
+            <>
+              Hello, <Text style={{ fontWeight: 'bold' }}>Android!</Text>
+            </>
+          ),
+          ios: 'Hello, iOS!',
+          native: 'Hello, Native!',
+          default: 'Hello, Default!',
+        })}
       </Text>
     </ScrollView>
   )

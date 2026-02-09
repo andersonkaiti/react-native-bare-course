@@ -1,26 +1,28 @@
-import { ScrollView, StatusBar } from 'react-native'
+import { Platform, SafeAreaView, ScrollView, StatusBar } from 'react-native'
 import { Button } from './src/Button'
 
-// A Status Bar é a barra que fica no topo do celular, onde fica o horário,
-// a bateria, o Wi-Fi, etc.
+// O Android e o iOS têm notchs e tamanhos de StatusBar variados. Para resolver
+// isso, usamos o SafeAreaView. No entanto, ele é exclusivo do iOS, então, no
+// Android, usamos o StatusBar.currentHeight para definir uma margin-top para
+// o ScrollView.
 
-// O componente StatusBar não é um componente visual, mas sim um componente que
-// manipula a Status Bar.
-
-// As props da StatusBar são dinâmicas, ou seja, elas podem ser alteradas por
-// eventos, estados, etc.
+console.log({
+  OS: Platform.OS,
+  StatusBarHeight: StatusBar.currentHeight, // * Android only
+})
 
 export function App() {
   return (
-    <ScrollView style={{ paddingTop: 200, backgroundColor: '#222' }}>
-      <StatusBar hidden={false} barStyle="dark-content" />
+    <SafeAreaView
+      style={{
+        marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+      }}
+    >
+      <ScrollView style={{ backgroundColor: '#222', height: '100%' }}>
+        <StatusBar hidden={false} barStyle="dark-content" />
 
-      {/* Caso hajam 2 StatusBar, é feito um merge entre as duas. Dessa forma,
-      é possível definir no <App /> as configurações padrões da StatusBar, e em
-      outras telas, configurações específicas para cada tela. */}
-      <StatusBar barStyle="light-content" />
-
-      <Button />
-    </ScrollView>
+        <Button />
+      </ScrollView>
+    </SafeAreaView>
   )
 }

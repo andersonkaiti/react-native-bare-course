@@ -1,8 +1,10 @@
-import { Platform, StatusBar } from 'react-native'
+import { Platform, StatusBar, StyleSheet } from 'react-native'
 
-// Desacopla o estilo do componente e apenas cria o objeto de estilos quando o
-// componente é importado.
-export const styles = {
+// O StyleSheet.create é uma função que aceita como argumento um objeto de
+// estilos que podem ser definidos com a ajuda do intelisense, e retorna um
+// objeto de estilos.
+
+export const styles = StyleSheet.create({
   wrapper: {
     marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
@@ -13,4 +15,4 @@ export const styles = {
   buttonsContainer: {
     gap: 16,
   },
-}
+})

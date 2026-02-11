@@ -28,4 +28,8 @@ export const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
+  androidButtonContainer: {
+    overflow: 'hidden',
+    borderRadius: 8,
+  },
 })

@@ -4,6 +4,7 @@ import {
   ScrollView,
   Text,
   TouchableHighlight,
+  TouchableNativeFeedback,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
@@ -38,16 +39,6 @@ export function App() {
             <Text style={styles.buttonLabel}>TouchableHighlight</Text>
           </TouchableHighlight>
 
-          {/*
-            O TouchableWithoutFeedback não tem nenhum feedback visual
-            quando é pressionado.
-
-            Ele não pode ter mais de um filho.
-
-            Além disso, a prop style não é aplicada a ele, então é
-            necessário envolver o componente em uma View ou adicionar
-            estilos no filho para que ele tenha um estilo.
-          */}
           <TouchableWithoutFeedback
             onPress={() => alert('TouchableWithoutFeedback pressed')}
           >
@@ -55,6 +46,24 @@ export function App() {
               <Text style={styles.buttonLabel}>TouchableWithoutFeedback</Text>
             </View>
           </TouchableWithoutFeedback>
+
+          {/* 
+            Ao pressioná-lo, ele exibe um efeito de ripple (* Android only),
+            assim como o componente Button, mas agora totalmente customizável,
+            e apenas aceitando um único filho.
+
+            No iOS, ele age como um TouchableWithoutFeedback.
+          */}
+          <View style={styles.androidButtonContainer}>
+            <TouchableNativeFeedback
+              onPress={() => alert('TouchableNativeFeedback pressed')}
+              background={TouchableNativeFeedback.Ripple('#f00')}
+            >
+              <View style={styles.button}>
+                <Text style={styles.buttonLabel}>TouchableNativeFeedback</Text>
+              </View>
+            </TouchableNativeFeedback>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>

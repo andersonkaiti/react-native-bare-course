@@ -5,6 +5,7 @@ import {
   Text,
   TouchableHighlight,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native'
 import { styles } from './styles'
@@ -26,33 +27,34 @@ export function App() {
             style={styles.button}
           >
             <Text style={styles.buttonLabel}>TouchableOpacity</Text>
-            <Text style={styles.buttonLabel}>TouchableOpacity</Text>
           </TouchableOpacity>
 
-          {/* 
-            Quando o TouchableHighlight é pressionado, ele recebe um destaque,
-            ou seja, uma cor de fundo é aplicada nele, que por padrão é preta,
-            mas pode ser alterada usando a prop underlayColor.
-
-            O highlight só funciona caso ele tenha um onPress.
-
-            Além disso, ao ser pressionado, o texto dentro dele tem a opacidade
-            alterada, mas isso pode ser alterado usando a prop activeOpacity,
-            que transfere o valor para o filho.
-
-            Limitação: O TouchableHighlight não aceita múltiplos filhos.
-          */}
           <TouchableHighlight
             onPress={() => alert('TouchableHighlight pressed')}
             style={styles.button}
             underlayColor="#f00"
             activeOpacity={0.5}
           >
-            <View>
-              <Text style={styles.buttonLabel}>TouchableHighlight</Text>
-              <Text style={styles.buttonLabel}>TouchableHighlight</Text>
-            </View>
+            <Text style={styles.buttonLabel}>TouchableHighlight</Text>
           </TouchableHighlight>
+
+          {/*
+            O TouchableWithoutFeedback não tem nenhum feedback visual
+            quando é pressionado.
+
+            Ele não pode ter mais de um filho.
+
+            Além disso, a prop style não é aplicada a ele, então é
+            necessário envolver o componente em uma View ou adicionar
+            estilos no filho para que ele tenha um estilo.
+          */}
+          <TouchableWithoutFeedback
+            onPress={() => alert('TouchableWithoutFeedback pressed')}
+          >
+            <View style={styles.button}>
+              <Text style={styles.buttonLabel}>TouchableWithoutFeedback</Text>
+            </View>
+          </TouchableWithoutFeedback>
         </View>
       </ScrollView>
     </SafeAreaView>

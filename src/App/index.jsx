@@ -1,35 +1,45 @@
-import { Button, SafeAreaView, ScrollView, View } from 'react-native'
+import {
+  Button,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { styles } from './styles'
-
-// No React Native, existem 6 componentes para lidar com elementos
-// pressionáveis.
 
 export function App() {
   return (
     <SafeAreaView style={styles.wrapper}>
       <ScrollView style={styles.container}>
         <View style={styles.buttonsContainer}>
-          {/*
-            Precisa receber a prop title.
-
-            Além disso, a estilização dele do
-            android para iOS é totalmente diferente.
-
-            Android: botão com fundo azul, feito de ripple e texto em caixa-alta.
-
-            iOS: botão com fundo transparente, sem ripple e texto normal.
-
-            Problemas:
-            - Ele apenas aceita textos como conteúdo, e não ícones, números, etc.
-            - Ele não tem a prop style.
-          */}
           <Button
-            title="My Button"
-            color="#f00"
+            title="Button"
+            color="#000"
             onPress={() => alert('Button pressed')}
-            disabled={false}
-            touchSoundDisabled // * Android only
           />
+
+          {/*
+            Os elementos Touchable permitem que qualquer elemento da ui,
+            como uma View, uma imagem, etc., seja pressionável.
+
+            O "Opacity" do TouchableOpacity está relacionado com o tipo de
+            feedback quando o componente é pressionado, ou seja, tudo dentro
+            dele escurece quando é pressionado.
+
+            A prop "activeOpacity" define o nível de opacidade quando o
+            componente é pressionado.
+
+            Ele aceita a prop style.
+          */}
+
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => alert('TouchableOpacity pressed')}
+            style={styles.button}
+          >
+            <Text style={styles.buttonLabel}>TouchableOpacity</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>

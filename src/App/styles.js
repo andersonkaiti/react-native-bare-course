@@ -17,4 +17,15 @@ export const styles = StyleSheet.create({
   buttonsContainer: {
     gap: 16,
   },
+  button: {
+    backgroundColor: '#222',
+    height: 48,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonLabel: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
 })

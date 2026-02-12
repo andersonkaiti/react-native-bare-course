@@ -1,5 +1,6 @@
 import {
   Button,
+  Pressable,
   SafeAreaView,
   ScrollView,
   Text,
@@ -28,16 +29,7 @@ export function App() {
             activeOpacity={0.5}
             style={[styles.button, disabled && styles.buttonDisabled]}
             disabled={disabled}
-            /*
-              Caso o usuário pressione e arraste o dedo para fora da área de
-              toque, o evento onPress não será chamado, mas caso ele volte para
-              a área de toque, o evento será chamado.
-  
-              Para aumentar a área de toque, usamos a prop pressRetentionOffset,
-              passando um valor em pixels.
-            */
             pressRetentionOffset={16}
-            //
             onPress={() => console.log('TouchableOpacity pressed')}
             onPressIn={() => console.log('onPressIn')}
             onPressOut={() => console.log('onPressOut')}
@@ -90,6 +82,66 @@ export function App() {
           >
             <Text>Ver mais</Text>
           </TouchableOpacity>
+
+          {/* 
+            O Pressable foi introduzido na versão 0.63 do React Native e é o
+            botão mais moderno.
+
+            Benefícios:
+            1. Simplifica as coisas, permitindo reproduzir os mesmos feebacks de
+            todos os outros componentes de toque.
+            2. Flexibilidade na forma de entregar um feedback de touch para o
+            usuário.
+            3. Os nossos apps deixam de ter uma "cara de React Native".
+
+            Aceita vários filhos.
+
+            Por padrão, ele é um TouchableWithoutFeedback.
+
+            Dentro da prop style, é possível adicionar uma função callback que
+            recebe como parâmetro um objeto com a prop pressed. Para utilizar no
+            elemento filho, é necessário utilizar a render prop para acessar o
+            valor.
+
+            A prop android_ripple (* Android only) permite adicionar um
+            efeito de ondulação quando o botão é pressionado.
+
+            A prop android_disableSound (* Android only) permite desabilitar o
+            som quando o botão é pressionado.
+
+            Aceita todas as props de lifecycle. A diferença é que a ordem é um
+            pouco diferente: onPressIn -> onPress -> onPressOut
+           */}
+          <Pressable
+            style={({ pressed }) => [
+              styles.button,
+              pressed && {
+                transform: 'scale(.97)',
+              },
+            ]}
+            onPress={() => console.log('Pressable pressed')}
+            android_ripple={{ color: '#f00' }}
+            android_disableSound
+            onPressIn={() => console.log('onPressIn')}
+            onPressOut={() => console.log('onPressOut')}
+            onLongPress={() => console.log('onLongPress')}
+            delayLongPress={3000}
+            hitSlop={30}
+          >
+            {/* Render props */}
+            {({ pressed }) => (
+              <Text
+                style={[
+                  styles.buttonLabel,
+                  pressed && {
+                    opacity: 0.5,
+                  },
+                ]}
+              >
+                Pressable
+              </Text>
+            )}
+          </Pressable>
         </View>
       </ScrollView>
     </SafeAreaView>

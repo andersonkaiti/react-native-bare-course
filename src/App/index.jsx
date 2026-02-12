@@ -24,12 +24,6 @@ export function App() {
             onPress={() => alert('Button pressed')}
           />
 
-          {/* 
-            Nos componentes TouchableOpacity, não existe nenhuma prop para
-            controlar o estilo do botão quando ele está desabilitado. Para
-            isso, usamos a propriedade disabled e aplicamos um estilo
-            condicionalmente.
-          */}
           <TouchableOpacity
             activeOpacity={0.5}
             style={[styles.button, disabled && styles.buttonDisabled]}
@@ -71,6 +65,27 @@ export function App() {
               </View>
             </TouchableNativeFeedback>
           </View>
+
+          {/* 
+            A propriedade hitSlop é usada para aumentar a área de toque de um
+            componente. Isso é útil em componentes pequenos, como ícones ou
+            botões, para melhorar a experiência de toque do usuário.
+          */}
+          <TouchableOpacity
+            onPress={() => alert('Ver mais!')}
+            style={{
+              backgroundColor: 'red',
+              alignSelf: 'flex-start',
+            }}
+            hitSlop={{
+              top: 10,
+              bottom: 10,
+              left: 10,
+              right: 10,
+            }}
+          >
+            <Text>Ver mais</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>

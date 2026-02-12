@@ -16,16 +16,40 @@ export function App() {
     <SafeAreaView style={styles.wrapper}>
       <ScrollView style={styles.container}>
         <View style={styles.buttonsContainer}>
+          {/* 
+            O único evento permitido no Button é o onPress.
+          */}
           <Button
             title="Button"
             color="#000"
             onPress={() => alert('Button pressed')}
           />
 
+          {/* 
+            onPressIn: é chamado no primeiro milissegundo quando o usuário
+            pressiona o botão.
+
+            onPressOut: é chamado quando o usuário solta o botão.
+
+            onLongPress: é chamado quando o usuário pressiona e segura o
+            elemento pressionável.
+
+            Lifecycle: onPressIn -> onPressOut -> onPress
+
+            Long Press Lifecycle: onPressIn -> onLongPress -> onPressOut
+
+            Para controlar o tempo de delay do long press, usamos a propriedade
+            delayLongPress em milissegundos.
+          */}
           <TouchableOpacity
             activeOpacity={0.5}
-            onPress={() => alert('TouchableOpacity pressed')}
             style={styles.button}
+            //
+            onPress={() => console.log('TouchableOpacity pressed')}
+            onPressIn={() => console.log('onPressIn')}
+            onPressOut={() => console.log('onPressOut')}
+            onLongPress={() => console.log('onLongPress')}
+            delayLongPress={3000}
           >
             <Text style={styles.buttonLabel}>TouchableOpacity</Text>
           </TouchableOpacity>
@@ -47,13 +71,6 @@ export function App() {
             </View>
           </TouchableWithoutFeedback>
 
-          {/* 
-            Ao pressioná-lo, ele exibe um efeito de ripple (* Android only),
-            assim como o componente Button, mas agora totalmente customizável,
-            e apenas aceitando um único filho.
-
-            No iOS, ele age como um TouchableWithoutFeedback.
-          */}
           <View style={styles.androidButtonContainer}>
             <TouchableNativeFeedback
               onPress={() => alert('TouchableNativeFeedback pressed')}

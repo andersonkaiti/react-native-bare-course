@@ -12,7 +12,7 @@ import {
 import { styles } from './styles'
 
 export function App() {
-  const disabled = true
+  const disabled = false
 
   return (
     <SafeAreaView style={styles.wrapper}>
@@ -28,6 +28,15 @@ export function App() {
             activeOpacity={0.5}
             style={[styles.button, disabled && styles.buttonDisabled]}
             disabled={disabled}
+            /*
+              Caso o usuário pressione e arraste o dedo para fora da área de
+              toque, o evento onPress não será chamado, mas caso ele volte para
+              a área de toque, o evento será chamado.
+  
+              Para aumentar a área de toque, usamos a prop pressRetentionOffset,
+              passando um valor em pixels.
+            */
+            pressRetentionOffset={16}
             //
             onPress={() => console.log('TouchableOpacity pressed')}
             onPressIn={() => console.log('onPressIn')}
@@ -66,11 +75,6 @@ export function App() {
             </TouchableNativeFeedback>
           </View>
 
-          {/* 
-            A propriedade hitSlop é usada para aumentar a área de toque de um
-            componente. Isso é útil em componentes pequenos, como ícones ou
-            botões, para melhorar a experiência de toque do usuário.
-          */}
           <TouchableOpacity
             onPress={() => alert('Ver mais!')}
             style={{

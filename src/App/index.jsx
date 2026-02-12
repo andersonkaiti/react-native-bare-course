@@ -12,13 +12,12 @@ import {
 import { styles } from './styles'
 
 export function App() {
+  const disabled = true
+
   return (
     <SafeAreaView style={styles.wrapper}>
       <ScrollView style={styles.container}>
         <View style={styles.buttonsContainer}>
-          {/* 
-            O único evento permitido no Button é o onPress.
-          */}
           <Button
             title="Button"
             color="#000"
@@ -26,24 +25,15 @@ export function App() {
           />
 
           {/* 
-            onPressIn: é chamado no primeiro milissegundo quando o usuário
-            pressiona o botão.
-
-            onPressOut: é chamado quando o usuário solta o botão.
-
-            onLongPress: é chamado quando o usuário pressiona e segura o
-            elemento pressionável.
-
-            Lifecycle: onPressIn -> onPressOut -> onPress
-
-            Long Press Lifecycle: onPressIn -> onLongPress -> onPressOut
-
-            Para controlar o tempo de delay do long press, usamos a propriedade
-            delayLongPress em milissegundos.
+            Nos componentes TouchableOpacity, não existe nenhuma prop para
+            controlar o estilo do botão quando ele está desabilitado. Para
+            isso, usamos a propriedade disabled e aplicamos um estilo
+            condicionalmente.
           */}
           <TouchableOpacity
             activeOpacity={0.5}
-            style={styles.button}
+            style={[styles.button, disabled && styles.buttonDisabled]}
+            disabled={disabled}
             //
             onPress={() => console.log('TouchableOpacity pressed')}
             onPressIn={() => console.log('onPressIn')}

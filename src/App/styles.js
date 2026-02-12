@@ -32,4 +32,7 @@ export const styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: 8,
   },
+  buttonDisabled: {
+    backgroundColor: '#ccc',
+  },
 })

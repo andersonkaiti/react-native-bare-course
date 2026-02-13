@@ -1,31 +1,15 @@
-import { SafeAreaView, TextInput, View } from 'react-native'
+import { SafeAreaView, View } from 'react-native'
 import { Button } from '../components/Button'
+import { Input } from '../components/Input'
 import { styles } from './styles'
 
 export function App() {
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          placeholder="E-mail"
-          placeholderTextColor="#aaa"
-          editable
-          // readOnly
-          // textAlign="left"
-          // maxLength={9}
-          // caretHidden={false}
-          // cursorColor="#f00" // * Android only
-          // selectionColor="#f00" // Também altera o cursor do iOS
-          autoFocus // Foca o input ao abrir a tela
-        />
+        <Input placeholder="E-mail" />
 
-        <TextInput
-          style={styles.input}
-          placeholder="Senha"
-          placeholderTextColor="#aaa"
-          secureTextEntry
-        />
+        <Input placeholder="Senha" secureTextEntry />
 
         <Button>Hello, Button!</Button>
       </View>

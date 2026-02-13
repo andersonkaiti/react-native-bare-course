@@ -1,6 +1,9 @@
 import { Pressable, Text } from 'react-native'
 import { style } from './styles'
 
+/**
+ * @param {import("react-native").PressableProps} props
+ */
 export function Button({ children, disabled, ...props }) {
   return (
     <Pressable

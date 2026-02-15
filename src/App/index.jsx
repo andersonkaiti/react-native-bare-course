@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { SafeAreaView, View } from 'react-native'
 import { Button } from '../components/Button'
 import { Input } from '../components/Input'
+import { TextArea } from '../components/Textarea'
 import { styles } from './styles'
 
 export function App() {
@@ -20,6 +21,8 @@ export function App() {
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.container}>
+        <TextArea placeholder="Descrição" />
+
         <Input
           placeholder="E-mail"
           keyboardType="email-address"
@@ -30,17 +33,7 @@ export function App() {
             passwordInputRef.current.focus()
           }}
           returnKeyType="next"
-          // Mesmo que o componente passe a ser controlled ao adicionar a prop
-          // value e o onChange não esteja definido, o valor aparece e some
-          // pois isso é controlado do lado nativo. Então o lado nativo informa
-          // essa alteração para o JavaScript, mas como o valor no JavaScript
-          // não foi alterado, ele retorna ao estado inicial.
           value={email}
-          // Neste caso, o event contém todas as informações.
-          // onChange={(event) => {
-          //   setEmail(event.nativeEvent.text)
-          // }}
-          // E neste, o que está disponível é o texto do input.
           onChangeText={setEmail}
         />
 

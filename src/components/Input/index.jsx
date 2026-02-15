@@ -12,7 +12,6 @@ export const Input = forwardRef((props, ref) => {
     <TextInput
       ref={ref}
       style={[styles.input, isFocused && styles.inputFocused]}
-      placeholder="E-mail"
       placeholderTextColor="#aaa"
       onFocus={() => setIsFocused(true)}
       onBlur={() => setIsFocused(false)}

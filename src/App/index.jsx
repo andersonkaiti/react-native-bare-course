@@ -1,5 +1,10 @@
 import { useRef, useState } from 'react'
-import { SafeAreaView, Switch, View } from 'react-native'
+import {
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  Switch,
+} from 'react-native'
 import { Button } from '../components/Button'
 import { Input } from '../components/Input'
 import { TextArea } from '../components/Textarea'
@@ -21,21 +26,25 @@ export function App() {
 
   return (
     <SafeAreaView style={styles.wrapper}>
-      <View style={styles.container}>
-        {/* 
-          O componente Switch é uma alternativa ao checkbox.
+      {/* 
+        Caso existam vários inputs, o keyboard pode se sobrepor a eles. Para
+        evitar isso, usamos o KeyboardAvoidingView, que ajuda a evitar esse
+        problema.
 
-          Ele sempre precisa ser um controlled component.
+        A prop behavior define como o KeyboardAvoidingView vai se comportar
+        nesse caso.
 
-          Para alterar a sua aparência, utilizamos as props:
-          - thumbColor -> controla a cor da bolinha do Switch
-          - trackColor -> controla a cor do fundo do Switch
-        */}
+        Também é possivel desativar tudo com a prop enabled={false}
+      */}
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        // enabled={false}
+      >
         <Switch
           style={{ alignSelf: 'flex-start' }}
           value={selected}
           onValueChange={setSelected}
-          // disabled
           thumbColor="purple"
           ios_backgroundColor="yellow"
           trackColor={{
@@ -72,7 +81,7 @@ export function App() {
         />
 
         <Button onPress={handleSubmit}>Enviar</Button>
-      </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   )
 }

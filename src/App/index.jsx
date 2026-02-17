@@ -1,7 +1,7 @@
 import { FlatList, SafeAreaView, Text, View } from 'react-native'
 import { styles } from './styles'
 
-const POSTS_COUNT = 5
+const POSTS_COUNT = 100
 
 /**
  * @type {Array<{ id: number, title: string }>}
@@ -83,17 +83,15 @@ export function App() {
   return (
     <SafeAreaView style={styles.wrapper}>
       <FlatList
-        // Adiciona um componente no topo da lista e que acompanha o scroll.
-        // É possível enviar tanto a referência da função quanto o JSX.
         ListHeaderComponent={<Header title="Posts" />}
-        // Adiciona um componente no final da lista e que acompanha o scroll.
         ListFooterComponent={Footer}
-        // Adiciona um componente quando a lista está vazia.
         ListEmptyComponent={EmptyState}
-        // Adiciona um componente entre os itens da lista.
-        ItemSeparatorComponent={Divider}
+        // É uma prop da ScrollView que permite manter o elemento filho
+        // "grudado" no topo da lista a partir do seu índice. Além disso, ela
+        // aceita vários índices (elementos) por meio de um array.
+        stickyHeaderIndices={[0]}
         style={styles.container}
-        // contentContainerStyle={{ gap: 16 }}
+        contentContainerStyle={{ gap: 16 }}
         data={posts}
         keyExtractor={(post) => post.id}
         renderItem={({ item: post }) => <ListItem title={post.title} />}

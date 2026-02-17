@@ -1,87 +1,43 @@
-import { useRef, useState } from 'react'
-import {
-  KeyboardAvoidingView,
-  Platform,
-  SafeAreaView,
-  Switch,
-} from 'react-native'
-import { Button } from '../components/Button'
-import { Input } from '../components/Input'
-import { TextArea } from '../components/Textarea'
+import { SafeAreaView, ScrollView, Text, View } from 'react-native'
 import { styles } from './styles'
 
+const POSTS_COUNT = 30
+
+/**
+ * @type {Array<{ id: number, title: string }>}
+ */
+const posts = Array.from({ length: POSTS_COUNT }, (_, index) => ({
+  id: Math.random(),
+  title: `Post #${index + 1}`,
+}))
+
 export function App() {
-  const passwordInputRef = useRef(null)
-
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [selected, setSelected] = useState(false)
-
-  function handleSubmit() {
-    console.log({
-      email,
-      password,
-    })
-  }
-
   return (
     <SafeAreaView style={styles.wrapper}>
       {/* 
-        Caso existam vários inputs, o keyboard pode se sobrepor a eles. Para
-        evitar isso, usamos o KeyboardAvoidingView, que ajuda a evitar esse
-        problema.
+        A prop style aplica estilos na própria ScrollView, enquanto o
+        contentContainerStyle aplica estilos no container interno que
+        contém os elementos filhos.
 
-        A prop behavior define como o KeyboardAvoidingView vai se comportar
-        nesse caso.
-
-        Também é possivel desativar tudo com a prop enabled={false}
+        Ou seja: a ScrollView é um container e dentro dela existe um
+        contentContainer que é outro container.
       */}
-      <KeyboardAvoidingView
+      <ScrollView
         style={styles.container}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        // enabled={false}
+        contentContainerStyle={{
+          alignItems: 'stretch',
+          gap: 16,
+        }}
       >
-        <Switch
-          style={{ alignSelf: 'flex-start' }}
-          value={selected}
-          onValueChange={setSelected}
-          thumbColor="purple"
-          ios_backgroundColor="yellow"
-          trackColor={{
-            false: 'yellow',
-            true: '#0fa0f8',
-          }}
-        />
-
-        <TextArea placeholder="Descrição" />
-
-        <Input
-          placeholder="E-mail"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          autoCorrect={false}
-          autoComplete="email"
-          onSubmitEditing={() => {
-            passwordInputRef.current.focus()
-          }}
-          returnKeyType="next"
-          value={email}
-          onChangeText={setEmail}
-        />
-
-        <Input
-          ref={passwordInputRef}
-          placeholder="Senha"
-          secureTextEntry
-          keyboardType="number-pad"
-          returnKeyType="done"
-          onSubmitEditing={handleSubmit}
-          value={password}
-          onChangeText={setPassword}
-        />
-
-        <Button onPress={handleSubmit}>Enviar</Button>
-      </KeyboardAvoidingView>
+        {/*
+          A renderização de listas podem ser feitas da mesma forma que no React.
+        */}
+        {posts.map((post) => (
+          <View key={post.id} style={styles.postContainer}>
+            <Text style={styles.postTitle}>{post.title}</Text>
+          </View>
+        ))}
+      </ScrollView>
     </SafeAreaView>
   )
 }

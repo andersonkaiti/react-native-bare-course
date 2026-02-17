@@ -8,7 +8,6 @@ export const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
     flex: 1,
-    gap: 16,
   },
   postContainer: {
     backgroundColor: '#333',

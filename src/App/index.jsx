@@ -1,7 +1,7 @@
 import { FlatList, SafeAreaView, Text, View } from 'react-native'
 import { styles } from './styles'
 
-const POSTS_COUNT = 100_000
+const POSTS_COUNT = 5
 
 /**
  * @type {Array<{ id: number, title: string }>}
@@ -22,28 +22,81 @@ function ListItem({ title }) {
   )
 }
 
+/**
+ * @param {{title: string}} param
+ */
+function Header({ title }) {
+  return (
+    <View
+      style={{
+        backgroundColor: '#ccc',
+        padding: 16,
+        borderRadius: 8,
+      }}
+    >
+      <Text>{title}</Text>
+    </View>
+  )
+}
+
+function Footer() {
+  return (
+    <View
+      style={{
+        backgroundColor: '#000',
+        padding: 24,
+        borderRadius: 8,
+      }}
+    >
+      <Text style={{ color: '#fff' }}>Rodapé</Text>
+    </View>
+  )
+}
+
+function EmptyState() {
+  return (
+    <View
+      style={{
+        backgroundColor: '#555',
+        padding: 24,
+        borderRadius: 8,
+      }}
+    >
+      <Text style={{ color: '#fff' }}>Nenhum post encontrado</Text>
+    </View>
+  )
+}
+
+function Divider() {
+  return (
+    <View
+      style={{
+        height: 1,
+        backgroundColor: '#aaa',
+        marginVertical: 12,
+      }}
+    />
+  )
+}
+
 export function App() {
   return (
     <SafeAreaView style={styles.wrapper}>
       <FlatList
+        // Adiciona um componente no topo da lista e que acompanha o scroll.
+        // É possível enviar tanto a referência da função quanto o JSX.
+        ListHeaderComponent={<Header title="Posts" />}
+        // Adiciona um componente no final da lista e que acompanha o scroll.
+        ListFooterComponent={Footer}
+        // Adiciona um componente quando a lista está vazia.
+        ListEmptyComponent={EmptyState}
+        // Adiciona um componente entre os itens da lista.
+        ItemSeparatorComponent={Divider}
         style={styles.container}
-        contentContainerStyle={{
-          gap: 16,
-        }}
+        // contentContainerStyle={{ gap: 16 }}
         data={posts}
         keyExtractor={(post) => post.id}
         renderItem={({ item: post }) => <ListItem title={post.title} />}
-        // A Virtualized List não monta todos os itens da lista, mas sim
-        // gera pelo menos o layout, o espaço em branco onde o elemento
-        // será renderizado.
-
-        // A prop getItemLayout recebe uma função callback que pré-calcula
-        // o tamanho e a posição de cada item para melhorar a performance,
-        // assim o scroll permanece com um tamanho fixo, evitando o cálculo
-        // dinâmico do layout da FlatList.
-
-        // length -> altura do item
-        // offset -> distância do item em relação ao topo
         getItemLayout={(_, index) => ({
           index,
           length: 64 + 16,

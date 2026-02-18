@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { FlatList, SafeAreaView, Text, View } from 'react-native'
 import { styles } from './styles'
 
@@ -67,28 +68,27 @@ function EmptyState() {
   )
 }
 
-function Divider() {
-  return (
-    <View
-      style={{
-        height: 1,
-        backgroundColor: '#aaa',
-        marginVertical: 12,
-      }}
-    />
-  )
-}
-
 export function App() {
+  const [isRefreshing, setIsRefreshing] = useState(false)
+
+  async function handleRefresh() {
+    setIsRefreshing(true)
+
+    await new Promise((resolve) => setTimeout(resolve, 1_500))
+
+    setIsRefreshing(false)
+  }
+
   return (
     <SafeAreaView style={styles.wrapper}>
       <FlatList
+        // Função que será chamada quando o usuário puxar para baixo
+        onRefresh={handleRefresh}
+        // Controla se o spinner de refresh deve ser exibido
+        refreshing={isRefreshing}
         ListHeaderComponent={<Header title="Posts" />}
         ListFooterComponent={Footer}
         ListEmptyComponent={EmptyState}
-        // É uma prop da ScrollView que permite manter o elemento filho
-        // "grudado" no topo da lista a partir do seu índice. Além disso, ela
-        // aceita vários índices (elementos) por meio de um array.
         stickyHeaderIndices={[0]}
         style={styles.container}
         contentContainerStyle={{ gap: 16 }}

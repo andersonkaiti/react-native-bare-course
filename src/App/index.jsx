@@ -1,5 +1,11 @@
 import { useState } from 'react'
-import { FlatList, SafeAreaView, Text, View } from 'react-native'
+import {
+  FlatList,
+  RefreshControl,
+  SafeAreaView,
+  Text,
+  View,
+} from 'react-native'
 import { styles } from './styles'
 
 const POSTS_COUNT = 100
@@ -74,7 +80,7 @@ export function App() {
   async function handleRefresh() {
     setIsRefreshing(true)
 
-    await new Promise((resolve) => setTimeout(resolve, 1_500))
+    await new Promise((resolve) => setTimeout(resolve, 10_000))
 
     setIsRefreshing(false)
   }
@@ -82,10 +88,29 @@ export function App() {
   return (
     <SafeAreaView style={styles.wrapper}>
       <FlatList
-        // Função que será chamada quando o usuário puxar para baixo
-        onRefresh={handleRefresh}
-        // Controla se o spinner de refresh deve ser exibido
-        refreshing={isRefreshing}
+        // Para ter um controle mais granular, é possível passar o componente
+        // RefreshControl dentro da prop refreshControl em vez de passar as
+        // props onRefresh e refreshing diretamente no FlatList.
+
+        // Detalhe: o controle de refresh vem da ScrollView, que é o componente
+        // pai do FlatList.
+        refreshControl={
+          <RefreshControl
+            onRefresh={handleRefresh}
+            refreshing={isRefreshing}
+            // iOS only
+            tintColor="purple"
+            title="Carregando posts..."
+            titleColor="purple"
+            // Android only
+            colors={[
+              'red',
+              // 'purple', 'blue', 'green'
+            ]}
+            progressBackgroundColor="#000"
+            size="default"
+          />
+        }
         ListHeaderComponent={<Header title="Posts" />}
         ListFooterComponent={Footer}
         ListEmptyComponent={EmptyState}

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import {
+  ActivityIndicator,
   FlatList,
   RefreshControl,
   SafeAreaView,
@@ -87,26 +88,29 @@ export function App() {
 
   return (
     <SafeAreaView style={styles.wrapper}>
-      <FlatList
-        // Para ter um controle mais granular, é possível passar o componente
-        // RefreshControl dentro da prop refreshControl em vez de passar as
-        // props onRefresh e refreshing diretamente no FlatList.
+      {/* 
+        Todas as props de um View estão disponíveis no ActivityIndicator:
 
-        // Detalhe: o controle de refresh vem da ScrollView, que é o componente
-        // pai do FlatList.
+        export interface ActivityIndicatorProps extends ViewProps
+
+        A prop animating controla se o indicador está visível ou não, mas a sua
+        View continua ocupando espaço no layout.
+
+        A prop size pode ser "small" ou "large", além de um número para definir
+        o tamanho, mas no iOS o spinner não muda de tamanho, mas sim o
+        container que o envolve.
+      */}
+      <ActivityIndicator color="purple" size="large" />
+
+      <FlatList
         refreshControl={
           <RefreshControl
             onRefresh={handleRefresh}
             refreshing={isRefreshing}
-            // iOS only
             tintColor="purple"
             title="Carregando posts..."
             titleColor="purple"
-            // Android only
-            colors={[
-              'red',
-              // 'purple', 'blue', 'green'
-            ]}
+            colors={['red']}
             progressBackgroundColor="#000"
             size="default"
           />

@@ -15,6 +15,7 @@ export const styles = StyleSheet.create({
     height: 64,
     justifyContent: 'center',
     alignItems: 'center',
+    flex: 1,
   },
   postTitle: {
     color: '#fff',

@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import {
-  ActivityIndicator,
   FlatList,
   RefreshControl,
   SafeAreaView,
@@ -88,21 +87,15 @@ export function App() {
 
   return (
     <SafeAreaView style={styles.wrapper}>
-      {/* 
-        Todas as props de um View estão disponíveis no ActivityIndicator:
-
-        export interface ActivityIndicatorProps extends ViewProps
-
-        A prop animating controla se o indicador está visível ou não, mas a sua
-        View continua ocupando espaço no layout.
-
-        A prop size pode ser "small" ou "large", além de um número para definir
-        o tamanho, mas no iOS o spinner não muda de tamanho, mas sim o
-        container que o envolve.
-      */}
-      <ActivityIndicator color="purple" size="large" />
-
       <FlatList
+        // horizontal
+        // Para criar listas no formato de grid, basta adicionar a prop
+        // numColumns. Dessa forma, o grupo de itens será renderizado dentro
+        // de uma linha e o gap só será aplicado entre essas linhas.
+        numColumns={3}
+        // Para adicionar um gap entre os elementos das linhas, basta adicionar
+        // a prop columnWrapperStyle.
+        columnWrapperStyle={{ gap: 16 }}
         refreshControl={
           <RefreshControl
             onRefresh={handleRefresh}

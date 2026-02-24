@@ -9,17 +9,4 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
     flex: 1,
   },
-  postContainer: {
-    backgroundColor: '#333',
-    borderRadius: 8,
-    height: 64,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-  },
-  postTitle: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
 })

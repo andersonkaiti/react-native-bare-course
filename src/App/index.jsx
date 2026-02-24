@@ -1,11 +1,9 @@
 import { useState } from 'react'
-import {
-  FlatList,
-  RefreshControl,
-  SafeAreaView,
-  Text,
-  View,
-} from 'react-native'
+import { FlatList, RefreshControl, SafeAreaView } from 'react-native'
+import { EmptyState } from '../components/EmptyState'
+import { Footer } from '../components/Footer'
+import { Header } from '../components/Header'
+import { ListItem } from '../components/ListItem'
 import { styles } from './styles'
 
 const POSTS_COUNT = 100
@@ -17,62 +15,6 @@ const posts = Array.from({ length: POSTS_COUNT }, (_, index) => ({
   id: Math.random(),
   title: `Post #${index + 1}`,
 }))
-
-/**
- * @param {{ title: string }} props
- */
-function ListItem({ title }) {
-  return (
-    <View style={styles.postContainer}>
-      <Text style={styles.postTitle}>{title}</Text>
-    </View>
-  )
-}
-
-/**
- * @param {{title: string}} param
- */
-function Header({ title }) {
-  return (
-    <View
-      style={{
-        backgroundColor: '#ccc',
-        padding: 16,
-        borderRadius: 8,
-      }}
-    >
-      <Text>{title}</Text>
-    </View>
-  )
-}
-
-function Footer() {
-  return (
-    <View
-      style={{
-        backgroundColor: '#000',
-        padding: 24,
-        borderRadius: 8,
-      }}
-    >
-      <Text style={{ color: '#fff' }}>Rodapé</Text>
-    </View>
-  )
-}
-
-function EmptyState() {
-  return (
-    <View
-      style={{
-        backgroundColor: '#555',
-        padding: 24,
-        borderRadius: 8,
-      }}
-    >
-      <Text style={{ color: '#fff' }}>Nenhum post encontrado</Text>
-    </View>
-  )
-}
 
 export function App() {
   const [isRefreshing, setIsRefreshing] = useState(false)
@@ -88,14 +30,6 @@ export function App() {
   return (
     <SafeAreaView style={styles.wrapper}>
       <FlatList
-        // horizontal
-        // Para criar listas no formato de grid, basta adicionar a prop
-        // numColumns. Dessa forma, o grupo de itens será renderizado dentro
-        // de uma linha e o gap só será aplicado entre essas linhas.
-        numColumns={3}
-        // Para adicionar um gap entre os elementos das linhas, basta adicionar
-        // a prop columnWrapperStyle.
-        columnWrapperStyle={{ gap: 16 }}
         refreshControl={
           <RefreshControl
             onRefresh={handleRefresh}

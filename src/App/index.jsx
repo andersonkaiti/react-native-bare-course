@@ -11,15 +11,12 @@ export function App() {
       <View style={styles.container}>
         <Button onPress={() => setVisible(true)}>Abrir Modal</Button>
 
-        {/* 
-          Por padrão, o Modal vem com uma cor sólida no fundo. Para que ele
-          fique transparente, precisamos passar a prop transparent.
-        */}
         <Modal
           visible={visible}
-          animationType="fade"
+          animationType="slide"
           statusBarTranslucent
-          transparent
+          // transparent
+          presentationStyle="pageSheet" // * iOS only
         >
           <View style={styles.modalOverlay}>
             <View style={styles.modalContainer}>

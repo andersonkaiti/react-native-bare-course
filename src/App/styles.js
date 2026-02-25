@@ -9,11 +9,16 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
     flex: 1,
   },
-  modalContainer: {
-    backgroundColor: '#000',
+  modalOverlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  modalContainer: {
+    backgroundColor: 'white',
+    padding: 24,
+    borderRadius: 8,
     gap: 16,
   },
 })

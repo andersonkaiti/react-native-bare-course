@@ -8,6 +8,7 @@ export const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
     flex: 1,
+    gap: 16,
   },
   modalOverlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',

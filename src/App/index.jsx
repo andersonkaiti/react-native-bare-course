@@ -1,22 +1,53 @@
 import { useState } from 'react'
-import { Modal, SafeAreaView, Text, View } from 'react-native'
+import { Alert, Modal, SafeAreaView, Text, View } from 'react-native'
 import { Button } from '../components/Button'
 import { styles } from './styles'
 
 export function App() {
   const [visible, setVisible] = useState(false)
 
+  // Além da função alert() nativa do JS, o React Native tem a API nativa e out
+  // of the box chamada Alert para lidar com alertas.
+
+  // Enquanto a função alert() não permite customizar nada e ser bloqueante, a
+  // API Alert permite customizar o alerta e não é bloqueante.
+
+  // Limitação no Android: não é possível ter mais de 3 botões.
+
+  function handleShowAlert() {
+    Alert.alert(
+      'Título do meu alerta',
+      'Bloquear o usuário fará com que ele perca o acesso ao sistema',
+      [
+        {
+          text: 'Cancelar',
+          onPress: () => console.log('Cancelar'),
+          style: 'default', // * iOS only
+        },
+        {
+          text: 'Bloquear',
+          onPress: () => console.log('Bloquear usuário'),
+          // Deixa o botão em negrito no iOS.
+          isPreferred: true, // * iOS only
+        },
+      ],
+      {
+        // Permite fechar o alerta clicando no lado de fora do alerta.
+        cancelable: true, // * Android only
+        // Chamado quando o alerta é fechado.
+        onDismiss: () => console.log('Alert dismissed'), // * Android only
+        userInterfaceStyle: 'light', // * iOS only
+      },
+    )
+  }
+
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.container}>
         <Button onPress={() => setVisible(true)}>Abrir Modal</Button>
 
-        {/*
-          Quando o usuário está utilizando os recursos do SO, ele pode fechar o
-          modal, no caso do page/modal sheet, clicando no botão de voltar do
-          celular ou arrastando para baixo. Para detectar esse evento e alterar
-          o estado do modal, utilizamos a prop onRequestClose.
-        */}
+        <Button onPress={handleShowAlert}>Mostrar alerta</Button>
+
         <Modal
           visible={visible}
           animationType="slide"

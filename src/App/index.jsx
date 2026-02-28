@@ -4,7 +4,9 @@ import {
   Alert,
   Modal,
   SafeAreaView,
+  StatusBar,
   Text,
+  useColorScheme,
   View,
 } from 'react-native'
 import { Button } from '../components/Button'
@@ -12,6 +14,47 @@ import { styles } from './styles'
 
 export function App() {
   const [visible, setVisible] = useState(false)
+
+  // const [theme, setTheme] = useState(Appearance.getColorScheme())
+
+  /**
+    O React Native fornece uma API nativa que permite capturar o esquema de
+    cores do sistema (light ou dark):
+
+    const theme = Appearance.getColorScheme()
+
+    No iOS o fundo do aplicativo assume a cor do sistema.
+
+    No entanto, a cor só é atualizada quando o aplicativo é aberto.
+
+    Para atualizar a cor quando o usuário muda o esquema de cores do sistema,
+    precisamos usar o método addChangeListener e criar um state para
+    re-renderizar o componente.
+
+    O método addChangeListener retorna um objeto com o método remove(), que
+    deve ser chamado quando o componente for desmontado para evitar memory leak.
+  */
+
+  // useEffect(() => {
+  //   const subscription = Appearance.addChangeListener(({ colorScheme }) => {
+  //     setTheme(colorScheme)
+  //   })
+
+  //   return () => {
+  //     subscription.remove()
+  //   }
+  // }, [])
+
+  /**
+    No entanto, o React Native também fornece um hook nativo que permite
+    capturar o esquema de cores do sistema (light ou dark):
+
+    const theme = useColorScheme()
+
+    O hook useColorScheme retorna a cor do sistema e permite atualizar de forma
+    reativa quando o usuário muda o esquema de cores do sistema.
+  */
+  const theme = useColorScheme()
 
   function handleShowAlert() {
     Alert.alert(
@@ -99,7 +142,16 @@ export function App() {
 
   return (
     <SafeAreaView style={styles.wrapper}>
-      <View style={styles.container}>
+      <StatusBar barStyle="dark-content" />
+
+      <View
+        style={[
+          styles.container,
+          {
+            backgroundColor: theme === 'dark' ? '#000' : '#fff',
+          },
+        ]}
+      >
         <Button onPress={() => setVisible(true)}>Abrir Modal</Button>
 
         <Button onPress={handleShowAlert}>Mostrar alerta</Button>

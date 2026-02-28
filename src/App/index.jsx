@@ -1,5 +1,12 @@
 import { useState } from 'react'
-import { Alert, Modal, SafeAreaView, Text, View } from 'react-native'
+import {
+  ActionSheetIOS,
+  Alert,
+  Modal,
+  SafeAreaView,
+  Text,
+  View,
+} from 'react-native'
 import { Button } from '../components/Button'
 import { styles } from './styles'
 
@@ -58,6 +65,38 @@ export function App() {
     )
   }
 
+  function handleShowActionSheet() {
+    // * iOS only
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options: ['Normal', 'Destructive', 'Disabled', 'Cancel'],
+        destructiveButtonIndex: 1,
+        cancelButtonIndex: 3,
+        title: 'Este aqui é o título da ActionSheet',
+        message: 'Esta aqui é a mensagem da ActionSheet',
+        disabledButtonIndices: [2],
+        userInterfaceStyle: 'light',
+        tintColor: 'purple',
+        cancelButtonTintColor: '#0f0',
+      },
+      (buttonIndex) => console.log(`Selecionou uma option: ${buttonIndex}`),
+    )
+  }
+
+  function handleShowShareActionSheet() {
+    // * iOS only
+    // Menu de compartilhamento
+    ActionSheetIOS.showShareActionSheetWithOptions(
+      {
+        message: 'Acesse o JStack',
+        url: 'https://jstack.com.br',
+        excludedActivityTypes: [],
+      },
+      (error) => console.log(error),
+      (success, method) => console.log({ success, method }),
+    )
+  }
+
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.container}>
@@ -66,6 +105,12 @@ export function App() {
         <Button onPress={handleShowAlert}>Mostrar alerta</Button>
 
         <Button onPress={handleShowPrompt}>Mostrar prompt</Button>
+
+        <Button onPress={handleShowActionSheet}>Mostrar action sheet</Button>
+
+        <Button onPress={handleShowShareActionSheet}>
+          Mostrar share action sheet
+        </Button>
 
         <Modal
           visible={visible}

@@ -9,38 +9,33 @@ export function App() {
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.container}>
-        <Image
-          source={{
-            uri: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-          }}
+        {/*
+          No Android, existe um bug ao utilizar resizeMode="contain" e
+          borderRadius juntos. Para contornar, é necessário adicionar a
+          prop overlayColor, ou simplesmente criar um container wrapper.
+        */}
+        <View
           style={{
             width: 300,
             height: 150,
-            // Pega os pixels que não são transparentes e substitui pela cor
-            // definida no tintColor.
-            // tintColor: 'red',
+            borderRadius: 20,
+            overflow: 'hidden',
           }}
-          alt="GTR na estrada"
-          /**
-            Define como a imagem será redimensionada para caber no container.
-
-            - cover: valor default que redimensiona a imagem de forma
-              proporcional até que ela cubra todo o container.
-
-            - contain: redimensiona a imagem de forma proporcional
-              até que a imagem inteira caiba no container.
-
-            - repeat: repete a imagem para preencher o container.
-
-            - stretch: redimensiona (estica) a imagem para preencher o
-              container sem manter a proporção.
-
-            - center: centraliza a imagem no container.
-           */
-          resizeMode="contain"
-          // Valor reativo
-          blurRadius={isBlurred ? 50 : 0}
-        />
+        >
+          <Image
+            source={{
+              uri: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            }}
+            style={{
+              width: 300,
+              height: 150,
+              backgroundColor: 'purple',
+            }}
+            alt="GTR na estrada"
+            resizeMode="contain"
+            blurRadius={isBlurred ? 50 : 0}
+          />
+        </View>
 
         <Button onPress={() => setIsBlurred(!isBlurred)}>
           {isBlurred ? 'Mostrar imagem' : 'Borrar imagem'}

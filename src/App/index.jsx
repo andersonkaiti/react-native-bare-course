@@ -1,52 +1,13 @@
-import { SafeAreaView, Text, useWindowDimensions, View } from 'react-native'
+import {
+  PixelRatio,
+  SafeAreaView,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native'
 import { styles } from './styles'
 
-/**
-  As imagens da nossa telas são formadas por pontos de luzes que estão
-  acendendo, apagando, trocando de cores, etc. Esses pontos são chamados de
-  pixels.
-
-  Densidade de pixels (Pixel Density): pixels por polegada (pixels per inch -
-  PPI), que é a quantidade de pixels que existem em uma polegada.
-
-  100 de PPI indica que existem 100 pixels de largura e altura, ou seja: 100px
-  x 100px.
-
-  Physical Pixels: são pixels que existem de verdade, ou seja, estão na tela
-  do dispositivo. Nessa abordagem, um dispositivo com um PPI maior renderiza
-  o elemento menor do que em um com PPI menor.
-
-  Devido a esse problema, quando definimos a quantidade de pixels, estamos
-  na verdade definindo a quantidade de logical pixels.
-
-  Logical Pixels: Density-independent Pixels, ou seja, são independentes de
-  densidade.
-  - Android: dp
-  - iOS: pt
-  - React Native: não tem nome específico.
-
-  Pixel Ratio: define quantos pixels físicos os pixels lógicos representam.
-*/
-
 export function App() {
-  // screen: a tela toda, incluindo a Status Bar e a Bottom Tab.
-  // window: área útil da tela, excluindo a Status Bar e a Bottom Tab.
-  /**
-    const [{ fontScale, scale, width, height }, setDimensions] = useState(
-      Dimensions.get('window'),
-    )
-
-    const orientation = width > height ? 'landscape' : 'portrait'
-
-    useEffect(() => {
-      const listener = Dimensions.addEventListener('change', ({ window }) => {
-        setDimensions(window)
-      })
-
-      return () => listener.remove()
-    }, [])
-   */
-
   const { fontScale, scale, width, height } = useWindowDimensions()
 
   const orientation = width > height ? 'landscape' : 'portrait'
@@ -63,6 +24,43 @@ export function App() {
         </Text>
 
         <Text>Orientation: {orientation}</Text>
+
+        {/*
+          O PixelRatio é uma classe que fornece informações sobre a densidade
+          de pixels do dispositivo, mas a sua implementação no código-fonte do
+          React Native utiliza a Dimensions API.
+
+          A única diferença entre o PixelRatio.get() e o useWindowDimensions()
+          é que apenas o useWindowDimensions() permite monitorar mudanças na
+          tela, como rotação e zoom.
+        */}
+        <Text>{PixelRatio.get()}</Text>
+
+        <Text>{PixelRatio.getFontScale()}</Text>
+
+        {/*
+          Pixel Size = Physical Pixel
+          Layout Size = Logical Pixel
+
+          O método getPixelSizeForLayoutSize() é usado para converter um
+          tamanho de layout em pixels físicos.
+        */}
+        <Text>{PixelRatio.getPixelSizeForLayoutSize(100)}</Text>
+
+        {/*
+          O startDetecting() é uma função no-op (no operation), ou seja, que
+          não faz nada.
+        */}
+        {/* <Text>{PixelRatio.startDetecting()}</Text> */}
+
+        {/* 
+          O roundToNearestPixel() é usado para arredondar um tamanho de layout
+          para o pixel físico mais próximo.
+
+          Ele multiplica o valor pelo pixel ratio, arredonda para cima ou para
+          baixo dependendo do valor e divide pelo pixel ratio.
+        */}
+        <Text>{PixelRatio.roundToNearestPixel(8.44)}</Text>
       </View>
     </SafeAreaView>
   )

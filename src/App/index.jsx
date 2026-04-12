@@ -1,47 +1,69 @@
-import { useState } from 'react'
-import { ImageBackground, SafeAreaView, View } from 'react-native'
-import { Button } from '../components/Button'
+import { SafeAreaView, Text, useWindowDimensions, View } from 'react-native'
 import { styles } from './styles'
 
+/**
+  As imagens da nossa telas são formadas por pontos de luzes que estão
+  acendendo, apagando, trocando de cores, etc. Esses pontos são chamados de
+  pixels.
+
+  Densidade de pixels (Pixel Density): pixels por polegada (pixels per inch -
+  PPI), que é a quantidade de pixels que existem em uma polegada.
+
+  100 de PPI indica que existem 100 pixels de largura e altura, ou seja: 100px
+  x 100px.
+
+  Physical Pixels: são pixels que existem de verdade, ou seja, estão na tela
+  do dispositivo. Nessa abordagem, um dispositivo com um PPI maior renderiza
+  o elemento menor do que em um com PPI menor.
+
+  Devido a esse problema, quando definimos a quantidade de pixels, estamos
+  na verdade definindo a quantidade de logical pixels.
+
+  Logical Pixels: Density-independent Pixels, ou seja, são independentes de
+  densidade.
+  - Android: dp
+  - iOS: pt
+  - React Native: não tem nome específico.
+
+  Pixel Ratio: define quantos pixels físicos os pixels lógicos representam.
+*/
+
 export function App() {
-  const [isBlurred, setIsBlurred] = useState(false)
-
+  // screen: a tela toda, incluindo a Status Bar e a Bottom Tab.
+  // window: área útil da tela, excluindo a Status Bar e a Bottom Tab.
   /**
-    Na web, para definir imagens de fundo usamos o background-image: url(), mas
-    no React Native não é possível definir nada além do backgroundColor nos
-    containers.
-    
-    Para fazer isso, existem 2 soluções:
+    const [{ fontScale, scale, width, height }, setDimensions] = useState(
+      Dimensions.get('window'),
+    )
 
-    - Criar uma View que encapsula a imagem e controla o tamanho dela e utilizar o
-    estilo position: 'absolute' na imagem.
-    - Utilizar o componente ImageBackground.
-  */
+    const orientation = width > height ? 'landscape' : 'portrait'
+
+    useEffect(() => {
+      const listener = Dimensions.addEventListener('change', ({ window }) => {
+        setDimensions(window)
+      })
+
+      return () => listener.remove()
+    }, [])
+   */
+
+  const { fontScale, scale, width, height } = useWindowDimensions()
+
+  const orientation = width > height ? 'landscape' : 'portrait'
 
   return (
-    <ImageBackground style={{ flex: 1 }} source={require('../images/gtr.jpg')}>
-      {/*
-        <View style={{ flex: 1 }}>
-          <Image
-            source={{
-              uri: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-            }}
-            style={{
-              width: '100%',
-              height: '100%',
-              position: 'absolute',
-            }}
-        />
-      */}
+    <SafeAreaView style={styles.wrapper}>
+      <View style={styles.container}>
+        <Text>Font scale: {fontScale}</Text>
 
-      <SafeAreaView style={styles.wrapper}>
-        <View style={styles.container}>
-          <Button onPress={() => setIsBlurred(!isBlurred)}>
-            {isBlurred ? 'Mostrar imagem' : 'Borrar imagem'}
-          </Button>
-        </View>
-      </SafeAreaView>
-      {/* </View> */}
-    </ImageBackground>
+        <Text>Pixel ratio: {scale}</Text>
+
+        <Text>
+          Dimensions: {width.toFixed(0)}x{height.toFixed(0)}
+        </Text>
+
+        <Text>Orientation: {orientation}</Text>
+      </View>
+    </SafeAreaView>
   )
 }

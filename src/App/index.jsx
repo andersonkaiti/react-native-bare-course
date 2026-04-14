@@ -60,6 +60,33 @@ export function App() {
             height: 100,
           }}
         />
+
+        <Image
+          // A partir do tamanho da imagem definido no style, o React Native
+          // escolherá a imagem com a resolução mais próxima do pixel ratio do
+          // dispositivo.
+          source={[
+            {
+              uri: 'https://placehold.co/100x100.png',
+              width: 100,
+              height: 100,
+            },
+            {
+              uri: 'https://placehold.co/200x200.png',
+              width: 200,
+              height: 200,
+            },
+            {
+              uri: 'https://placehold.co/300x300.png',
+              width: 300,
+              height: 300,
+            },
+          ]}
+          style={{
+            width: 100,
+            height: 100,
+          }}
+        />
       </View>
     </SafeAreaView>
   )

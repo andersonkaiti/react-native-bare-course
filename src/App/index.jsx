@@ -1,41 +1,64 @@
-import { Image, SafeAreaView, View } from 'react-native'
-import { SvgXml } from 'react-native-svg'
-import { UserIcon } from '../components/user-icon'
-import userIcon from '../images/user-icon/user-icon.png'
+import { useRef } from 'react'
+import { DrawerLayoutAndroid, SafeAreaView, Text, View } from 'react-native'
+import { Button } from '../components/Button'
 import { styles } from './styles'
 
+/**
+  DrawerLayoutAndroid
+  - Menu lateral.
+  - O componente nativo só existe para Android.
+
+  Para abrir o menu, é necessário fazer isso imperativamente, ou seja:
+  manipulando drawer a partir de uma ref e chamando o método openDrawer().
+
+  Além disso, ele precisa ser um wrapper de tudo na tela.
+*/
 export function App() {
+  const drawerRef = useRef()
+
+  function handleOpenDrawer() {
+    drawerRef.current?.openDrawer()
+  }
+
+  function handleCloseDrawer() {
+    drawerRef.current?.closeDrawer()
+  }
+
   return (
-    <SafeAreaView style={styles.wrapper}>
-      <View style={styles.container}>
-        <Image
-          source={userIcon}
+    <DrawerLayoutAndroid
+      ref={drawerRef}
+      // Define a posição do drawer
+      drawerPosition="left"
+      // Define o conteúdo do drawer
+      drawerWidth={250}
+      // Define como o drawer pode ser aberto
+      // locked-closed: trava e impede a abertura por gestos, mas ainda é
+      // possível clicar no overlay para fechar
+      // locked-open: trava todos os gestos e a abertura e fechamento deve ser
+      // tratada imperativamente
+      // unlocked: permite a abertura por gestos
+      drawerLockMode="locked-open"
+      // drawerBackgroundColor="#000000"
+      renderNavigationView={() => (
+        <View
           style={{
-            width: 100,
-            height: 100,
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#000',
           }}
-        />
+        >
+          <Text style={{ color: '#fff' }}>Hello, Drawer!</Text>
 
-        <SvgXml
-          width={400}
-          height={400}
-          xml={`
-            <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g clip-path="url(#clip0_1_2)">
-                <circle cx="50" cy="100" r="48" fill="black"/>
-                <circle cx="50" cy="27" r="21" fill="black"/>
-              </g>
-              <defs>
-                <clipPath id="clip0_1_2">
-                  <rect width="100" height="100" fill="white"/>
-                </clipPath>
-              </defs>
-            </svg>
-          `}
-        />
-
-        <UserIcon width={500} height={500} />
-      </View>
-    </SafeAreaView>
+          <Button onPress={handleCloseDrawer}>Fechar menu</Button>
+        </View>
+      )}
+    >
+      <SafeAreaView style={styles.wrapper}>
+        <View style={styles.container}>
+          <Button onPress={handleOpenDrawer}>Abrir menu</Button>
+        </View>
+      </SafeAreaView>
+    </DrawerLayoutAndroid>
   )
 }

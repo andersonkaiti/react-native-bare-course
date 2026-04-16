@@ -1,58 +1,13 @@
-import {
-  Image,
-  PixelRatio,
-  SafeAreaView,
-  Text,
-  useWindowDimensions,
-  View,
-} from 'react-native'
+import { Image, SafeAreaView, View } from 'react-native'
+import { SvgXml } from 'react-native-svg'
+import { UserIcon } from '../components/user-icon'
 import userIcon from '../images/user-icon/user-icon.png'
 import { styles } from './styles'
 
-/**
-  Dependendo do tamanho de uma imagem, em um pixel ratio maior ela poderá
-  perder a qualidade caso. Para solucionar isso, é preciso utilizar vetores ou,
-  é preciso usar imagens com diferentes resoluções, dependendo do pixel ratio
-  do dispositivo, como:
-  - user-icon.png
-  - user-icon@2x.png
-  - user-icon@3x.png
-
-  Convenção de nomenclatura de imagens:
-  user-icon{{suffix}}.png -> indica que a imagem tem o dobro ou o triplo
-  do tamanho original.
-  @ -> at, que significa "no/em", ou seja, a imagem está "no" formato 3x.
-
-  Caso haja variáveis variações da imagem com @2x, @3x, etc., o React Native
-  escolherá a imagem com a resolução mais próxima do pixel ratio do dispositivo.
-*/
-
 export function App() {
-  const { fontScale, scale, width, height } = useWindowDimensions()
-
-  const orientation = width > height ? 'landscape' : 'portrait'
-
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.container}>
-        <Text>Font scale: {fontScale}</Text>
-
-        <Text>Pixel ratio: {scale}</Text>
-
-        <Text>
-          Dimensions: {width.toFixed(0)}x{height.toFixed(0)}
-        </Text>
-
-        <Text>Orientation: {orientation}</Text>
-
-        <Text>{PixelRatio.get()}</Text>
-
-        <Text>{PixelRatio.getFontScale()}</Text>
-
-        <Text>{PixelRatio.getPixelSizeForLayoutSize(100)}</Text>
-
-        <Text>{PixelRatio.roundToNearestPixel(8.44)}</Text>
-
         <Image
           source={userIcon}
           style={{
@@ -61,32 +16,25 @@ export function App() {
           }}
         />
 
-        <Image
-          // A partir do tamanho da imagem definido no style, o React Native
-          // escolherá a imagem com a resolução mais próxima do pixel ratio do
-          // dispositivo.
-          source={[
-            {
-              uri: 'https://placehold.co/100x100.png',
-              width: 100,
-              height: 100,
-            },
-            {
-              uri: 'https://placehold.co/200x200.png',
-              width: 200,
-              height: 200,
-            },
-            {
-              uri: 'https://placehold.co/300x300.png',
-              width: 300,
-              height: 300,
-            },
-          ]}
-          style={{
-            width: 100,
-            height: 100,
-          }}
+        <SvgXml
+          width={400}
+          height={400}
+          xml={`
+            <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_1_2)">
+                <circle cx="50" cy="100" r="48" fill="black"/>
+                <circle cx="50" cy="27" r="21" fill="black"/>
+              </g>
+              <defs>
+                <clipPath id="clip0_1_2">
+                  <rect width="100" height="100" fill="white"/>
+                </clipPath>
+              </defs>
+            </svg>
+          `}
         />
+
+        <UserIcon width={500} height={500} />
       </View>
     </SafeAreaView>
   )

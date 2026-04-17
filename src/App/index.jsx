@@ -1,35 +1,34 @@
-import { SafeAreaView, Text, View } from 'react-native'
+import { SafeAreaView, View } from 'react-native'
+import { AppText } from '../components/AppText'
 import { styles } from './styles'
 
 /**
-  Por padrão, as famílias tipográficas utilizadas serão as padrões de cada
-  sistema operacional.
+  No React Native, não existe herança de estilos, por isso, para definir uma
+  mesma fonte a todos os textos, é necessário definir a propriedade
+  fontFamily em cada componente de texto.
 
-  Android: Roboto
-  iOS: SF Pro (San Francisco)
-
-  Para aplicar a fonte no iOS, é necessário informar o PostScript name da fonte,
-  enquanto que, no Android, basta informar o nome do arquivo da fonte. Para
-  evitar erros, é recomendado utilizar o nome PostScript em ambos os sistemas.
-
-  A biblioteca react-native-asset adiciona as fontes automaticamente ao projeto:
-  npx react-native-asset
-
-  É necessário adicionar as fontes no array assets no arquivo
-  react-native.config.js para que a biblioteca funcione.
+  No entanto, segundo a própria documentação do React Native, é recomendado
+  criar um componente Text personalizado e aplicar a fonte desejada nele.
 */
 export function App() {
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.container}>
-        <Text
+        <AppText
           style={{
             fontSize: 32,
-            fontFamily: 'PlaywriteNO',
           }}
         >
           Hello, JStack
-        </Text>
+        </AppText>
+
+        <AppText
+          style={{
+            fontSize: 48,
+          }}
+        >
+          Hello, JStack
+        </AppText>
       </View>
     </SafeAreaView>
   )

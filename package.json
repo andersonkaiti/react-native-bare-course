@@ -6,9 +6,11 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "format": "npx @biomejs/biome check --write"
+    "format": "npx @biomejs/biome check --write",
+    "server": "json-server --watch db.json --port 3333"
   },
   "dependencies": {
+    "json-server": "^1.0.0-beta.15",
     "react": "19.2.0",
     "react-native": "0.83.1",
     "react-native-svg": "^15.15.4"

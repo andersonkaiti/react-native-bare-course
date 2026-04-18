@@ -1,34 +1,40 @@
-import { SafeAreaView, View } from 'react-native'
+import { useEffect, useState, useTransition } from 'react'
+import { ActivityIndicator, SafeAreaView, View } from 'react-native'
 import { AppText } from '../components/AppText'
 import { styles } from './styles'
 
 /**
-  No React Native, não existe herança de estilos, por isso, para definir uma
-  mesma fonte a todos os textos, é necessário definir a propriedade
-  fontFamily em cada componente de texto.
-
-  No entanto, segundo a própria documentação do React Native, é recomendado
-  criar um componente Text personalizado e aplicar a fonte desejada nele.
+  O React Native tem suporte à fetch API e, como temos um browser nele, não
+  existe erro de CORS.
 */
 export function App() {
+  const [isLoading, startTransition] = useTransition()
+  const [todo, setTodo] = useState()
+
+  useEffect(() => {
+    async function load() {
+      startTransition(async () => {
+        const response = await fetch(
+          'https://jsonplaceholder.typicode.com/todos/1',
+        )
+
+        const data = await response.json()
+
+        await new Promise((resolve) => setTimeout(resolve, 1000))
+
+        setTodo(data)
+      })
+    }
+
+    load()
+  }, [])
+
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.container}>
-        <AppText
-          style={{
-            fontSize: 32,
-          }}
-        >
-          Hello, JStack
-        </AppText>
+        {isLoading && <ActivityIndicator />}
 
-        <AppText
-          style={{
-            fontSize: 48,
-          }}
-        >
-          Hello, JStack
-        </AppText>
+        {todo && <AppText style={{ fontSize: 32 }}>{todo.title}</AppText>}
       </View>
     </SafeAreaView>
   )
